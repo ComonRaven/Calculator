@@ -196,8 +196,8 @@ def toggle_deg_rad():
     条件演算子を使ったコード省略
     省略しないで書くと下のようになる
     if current_mode == "DEG":
-		current_mode = "RAD"
-	else:
-		current_mode = "DEG"
+		  current_mode = "RAD"
+	  else:
+		  current_mode = "DEG"
     '''
     return current_mode
