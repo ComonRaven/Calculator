@@ -10,14 +10,14 @@ function hidePopup(){
 
 //DEG,RAD処理
 function DEG_RAD(){
-    const className = document.getElementById("DEG_RAD");
-    if(className.textContent == "DEG"){
-        className.classList.remove("DEG");
-        className.classList.add("RAD");
-        className.textContent = "RAD";
-    }else{
-        className.classList.remove("RAD");
-        className.classList.add("DEG");
-        className.textContent = "DEG";
+    const className = document.getElementById("DEG_RAD"); //要素を取得
+    if(className.textContent == "DEG"){ //DEGの場合
+        className.classList.remove("DEG"); //クラスを削除
+        className.classList.add("RAD"); //クラスを追加
+        className.textContent = "RAD"; //テキストを変更
+    }else{ //RADの場合
+        className.classList.remove("RAD"); // クラスを削除
+        className.classList.add("DEG"); // クラスを追加
+        className.textContent = "DEG";  //テキストを変更
     }
 }

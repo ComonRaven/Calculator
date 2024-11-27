@@ -10,18 +10,17 @@ function calculateExpression() {
   expression = expression.replace(/(\d|\))\(/g, '$1*('); // (1+1)(1+1) を (1+1)*(1+1) に変換
 
   // eel.calculate_expression を呼び出す
-  eel.calculate_expression(expression)(function(result) {
-      document.querySelector('.screen1').value = result;
-      inputList = [];
-      inputList = result.toString().split('');
+  eel.calculate_expression(expression)(function(result) { // 引数としてexpressionを渡す 戻り値をresultに格納
+      document.querySelector('.screen1').value = result; // 計算結果を画面に表示
+      inputList = []; // 入力リストをクリア
+      inputList = result.toString().split(''); // 入力リストに計算結果''で分割して格納
       const screen = document.querySelector('.screen1');
-      cursorPosition = screen.value.length;
-      updateCursorPosition(screen.value || '');
-      console.log("inputList:", inputList);
+      cursorPosition = screen.value.length; // カーソルの位置を計算
+      updateCursorPosition(screen.value || ''); // カーソルの位置を更新
   });
 }
 
 // イベントリスナーを設定して "=" ボタンで計算を実行
 document.querySelector('.equal').addEventListener('click', () => {
-    calculateExpression();
+    calculateExpression(); // calculateExpression 関数を呼び出す
 });
