@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <title>電卓のアプリ</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script  type="text/javascript" src="eel.js"></script>
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/popup.css" />
+        <script src="js/popup.js" defer></script>
+        <script src="js/Display.js" defer></script>
+        <script src="js/basic_calculate.js" defer></script>
+    </head>
+    <body>
+        <h1>電卓を作ってみた</h1>
+        <main>
+            <div class="calculator">
+                <table class="table1">
+                    <tbody class="tbody1">
+                        <tr class="screen">
+                            <td>
+                                <input class="screen1" readonly>
+                                <div class="cursor"></div> <!--カーソル用のdiv-->
+                            </td>
+                        </tr>
+                        <tr class="row1">
+                            <td><button class="AC">AC</button></td>
+                            <td><button id="DEG_RAD" class="DEG" onclick="DEG_RAD()">DEG</button></td>
+                            <td><button id="left" class="left">☚</button></td>
+                            <td><button id="right" class="right">☛</button></td>
+                        </tr>
+                        <tr class="row2">
+                            <td><button class="bracket">()</button></td>
+                            <td><button class="pie">π</button></td>
+                            <td><button class="e">e</button></td>
+                            <td><button class="root">√</button></td>
+                        </tr>
+                        <tr class="row3">
+                            <td><button class="tfunc" onclick="showPopup()">三角関数</button></td>
+                            <td><button class="log">log</button></td>
+                            <td><button class="ln">ln</button></td>
+                            <td><button class="fraction">分数</button></td>
+                        </tr>
+                        <tr class="row4">
+                            <td><button class="seven">7</button></td>
+                            <td><button class="eight">8</button></td>
+                            <td><button class="nine">9</td>
+                            <td><button class="per">%</button></td>
+                            <td><button class="hat">^</button></td>
+                        </tr>
+                        <tr class="row5">
+                            <td><button class="four">4</button></td>
+                            <td><button class="five">5</button></td>
+                            <td><button class="six">6</button></td>
+                            <td><button class="mult">×</button></td>
+                            <td><button class="div">÷</button></td>
+                        </tr>
+                        <tr class="row6">
+                            <td><button class="one">1</button></td>
+                            <td><button class="two">2</button></td>
+                            <td><button class="three">3</td>
+                            <td><button class="plus">+</button></td>
+                            <td><button class="minus">-</button></td>
+                        </tr>
+                        <tr class="row7">
+                            <td><button class="zero">0</button></td>
+                            <td><button class="dot">.</button></td>
+                            <td><button class="BS">BS</button></td>
+                            <td><button class="equal">=</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="overlay" id="overlay"></div>
+                <div class="popup" id="popup">
+                    <table class="table2">
+                        <tbody class="tbody2">
+                            <tr class="sct">
+                                <td><button class="sin" onclick="hidePopup()">sin</button></td>
+                                <td><button class="cos" onclick="hidePopup()">cos</button></td>
+                                <td><button class="tan" onclick="hidePopup()">tan</button></td>
+                            </tr>
+                            <tr class="arc">
+                                <td><button class="asin" onclick="hidePopup()">arcsin</button></td>
+                                <td><button class="acos" onclick="hidePopup()">arccos</button></td>
+                                <td><button class="atan" onclick="hidePopup()">arctan</button></td>
+                            </tr>
+                            <tr class="inverse">
+                                <td><button class="cosec" onclick="hidePopup()">cosec</button></td>
+                                <td><button class="sec" onclick="hidePopup()">sec</button></td>
+                                <td><button class="cot" onclick="hidePopup()">cot</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button onclick="hidePopup()" class="close">閉じる</button>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

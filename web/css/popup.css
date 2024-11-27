@@ -1,0 +1,88 @@
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.popup {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 300px;
+    height: 270px;
+    border: 1px solid black;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+}
+table.table2{
+    display: block;
+    width: 300px;
+    height: 200px;
+}
+tbody.tbody2{
+    display: block;
+    width: 300px;
+    height: 200px;
+}
+.sct {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 300px;
+    height: 50px;
+    margin-top: 20px;
+    .sin, .cos, .tan {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 90px;
+        height: 50px;
+        font-size: 25px;
+    }
+}
+.arc {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 300px;
+    height: 50px;
+    margin-top: 20px;
+    .asin, .acos, .atan {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 90px;
+        height: 50px;
+        font-size: 25px;
+    }
+}
+.inverse {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 300px;
+    height: 50px;
+    margin-top: 20px;
+    .cosec, .sec, .cot {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 90px;
+        height: 50px;
+        font-size: 25px;
+    }
+}
+.close{
+    margin-top: 10px;
+    width: 100px;
+    height: 40px;
+    font-size: 25px;
+}
