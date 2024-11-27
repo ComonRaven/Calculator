@@ -1,16 +1,16 @@
-import re
-import math
-import eel
+import re # 正規表現用ライブラリreをインポート
+import math # 数学系ライブラリmathをインポート
+import eel # Webアプリを作るためのライブラリeelをインポート
 
 current_mode = "DEG"  # Set default to DEG mode
 
 def simplify_logs(tokens):
-    # 一時スタックで `log` や `ln` を検出して処理
-    stack = []
-    i = 0
+  	# 一時スタックで `log` や `ln` を検出して処理
+    stack = []  # 一時スタック
+    i = 0 # 現在のインデックス(カウント変数)
     while i < len(tokens):
-        if tokens[i] in ['log', 'ln'] and i + 2 < len(tokens):
-            if tokens[i + 1] == '(':
+        if tokens[i] in ['log', 'ln'] and i + 2 < len(tokens): # log(a) または ln(a) を検出
+            if tokens[i + 1] == '(': # エラーハンドリング logやlnの後に括弧がある場合
                 # log(a) を抽出
                 end_index_a = find_closing_parenthesis(tokens, i + 1)
                 if end_index_a is not None:
@@ -58,13 +58,14 @@ def round_to_six_decimal_places(value):
 @eel.expose
 def calculate_expression(expression):
     # トークン化（数値や演算子を抽出、負の数に対応,sin，cos，tan，asin，acos，atan，log，ln，（，）を抽出）
+    # 例）"2 + 3 * sin(45)" -> ["2", "+", "3", "*", "sin", "(", "45", ")"]
     tokens = re.findall(r'(?<!\d)-?\d+\.?\d*|[\+\-\*/\%\^]{1,2}|\(|\)|cosec|sec|cot|sin|cos|tan|arcsin|arccos|arctan|log|ln|e|π|√', expression.lower())
 
-    # 優先順位付きで中置記法をRPNに変換する関数（シャントリングヤードアルゴリズム）
+    # 中置記法（通常の数式の書き方）を逆ポーランド記法（RPN）に変換する関数（シャントリングヤードアルゴリズム）
     def infix_to_rpn(tokens):
-        output = []
-        operators = []
-        precedence = {'+': 1, '-': 1, '*': 2, '/': 2, '%': 2, '**': 3}
+        output = []	# 数値や関数を格納するリスト（RPN式）
+        operators = [] # 演算子や括弧を格納するスタック
+        precedence = {'+': 1, '-': 1, '*': 2, '/': 2, '%': 2, '**': 3} # 演算子の優先順位
         right_associative = {'**'}  # 右結合の演算子
 
         for token in tokens:
@@ -72,29 +73,29 @@ def calculate_expression(expression):
                 output.append(token)
             elif token in ['e','π']:  # 定数
                 output.append(token)
-            elif token in ['sin', 'cos', 'tan', 'arcsin', 'arccos', 'arctan', 'cosec', 'sec', 'cot', 'log', 'ln', '√']:  # 三角関数や対数
+            elif token in ['sin', 'cos', 'tan', 'arcsin', 'arccos', 'arctan', 'cosec', 'sec', 'cot', 'log', 'ln', '√']:  # 関数
                 operators.append(token)
             elif token in precedence:  # 演算子
                 while (operators and operators[-1] != '(' and
                        (precedence[operators[-1]] > precedence[token] or
                         (precedence[operators[-1]] == precedence[token] and token not in right_associative))):
-                    output.append(operators.pop())
+                    output.append(operators.pop()) # 優先順位が高い演算子を出力
                 operators.append(token)
             elif token == '(':
-                operators.append(token)
+                operators.append(token) # '('はスタックに追加
             elif token == ')':
                 while operators and operators[-1] != '(':
-                    output.append(operators.pop())
+                    output.append(operators.pop()) # 括弧が閉じ丸での演算子を出力
                 operators.pop()  # '('をスタックから取り除く
                 if operators and operators[-1] in ['sin', 'cos', 'tan', 'arcsin', 'arccos', 'arctan', 'cosec', 'sec', 'cot', 'log', 'ln', '√']:
                     output.append(operators.pop())  # 関数を出力
         while operators:
-            output.append(operators.pop())
+            output.append(operators.pop()) # 残った演算子を全て出力
         return output
 
     # RPN式を評価する関数
     def evaluate_rpn(rpn_tokens):
-        stack = []
+        stack = [] # 結果を格納するスタック
         for token in rpn_tokens:
             if re.match(r'-?\d+\.?\d*', token):  # 数値
                 stack.append(float(token))
@@ -178,17 +179,25 @@ def calculate_expression(expression):
                     stack.append(left % right)
                 elif token == '**':
                     stack.append(left ** right)
-        return stack.pop()
+        return stack.pop() # 最後にスタックに残った値が計算結果
 
     tokens = simplify_logs(tokens) # logやlnの足し算や引き算に対応
     rpn_tokens = infix_to_rpn(tokens) # RPN式に変換
-    print("RPN tokens:", rpn_tokens) # デバッグ用
+    #print("RPN tokens:", rpn_tokens)  デバッグ用 rpn形式のトークンを出力
     result = evaluate_rpn(rpn_tokens) # 計算する
     return round_to_six_decimal_places(result) # 小数点６文字目を四捨五入して小数点以下５文字で返す
 
 @eel.expose
 def toggle_deg_rad():
-    global current_mode
+    # deg rad の切り替えの関数
+    global current_mode # グローバル関数のcurrent_modeを取得
     current_mode = "RAD" if current_mode == "DEG" else "DEG"
-    #print("Mode switched to:", current_mode) デバッグ用
+    '''
+    条件演算子を使ったコード省略
+    省略しないで書くと下のようになる
+    if current_mode == "DEG":
+		current_mode = "RAD"
+	else:
+		current_mode = "DEG"
+    '''
     return current_mode

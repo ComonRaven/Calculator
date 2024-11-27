@@ -1,4 +1,4 @@
-let inputList = [];
+let inputList = [];     // List of input elements
 let cursorPosition = 0; // Tracks index within inputList
 let scrollOffset = 0;   // Tracks the horizontal scroll position to keep cursor visible
 
